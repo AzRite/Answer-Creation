@@ -74,8 +74,8 @@ def handle_join(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="""{}さんが解答作成部に参加しました！
-                        ノートからルールのご確認をよろしくお願いします\uDBC0\uDC2D
-                        マナーを守って、学力向上に努めましょう\uDBC0\uDC79""".format(json_result["displayName"])))
+ノートからルールのご確認をよろしくお願いします\uDBC0\uDC2D
+マナーを守って、学力向上に努めましょう\uDBC0\uDC79""".format(json_result["displayName"])))
 
 
 
