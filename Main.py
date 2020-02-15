@@ -56,7 +56,7 @@ def handle_message(event):
     cmd = event.message.text
     if not cmd.startswith("-"): return
     if cmd == "-日付を教えて":
-        text=datetime(2014,1,2,3,4,5).strftime('%Y年%m月%d日です')
+        text=datetime.now().strftime('%Y年%m月%d日です')
     else:
         text=cmd
     line_bot_api.reply_message(
