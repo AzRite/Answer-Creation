@@ -69,10 +69,13 @@ def handle_join(event):
         response = res.read()
     #display_name = json.loads(response.decode('utf-8')).displayName;
     json_result = json.loads(response.decode('utf-8'))
-    display_name = json_result.display_name
+    #display_name = json_result.display_name
+    str = ''
+    for key, value = json_result:
+        str += "'" + key + "' : '" + value + "'" 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは、{}。".format(display_name)))
+        TextSendMessage(text="こんにちは、{}".format(str)))
 
 
 
