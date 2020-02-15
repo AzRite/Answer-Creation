@@ -57,6 +57,16 @@ def handle_message(event):
     if not cmd.startswith("-"): return
     if cmd == "-日付":
         text=datetime.now().strftime('今日は%Y年%m月%d日です')
+    elif cmd == "-時間割":
+        day_list = ["月", "火", "水", "木", "金"]
+        items = [QuickReplyButton(action=MessageAction(label=f"{day}", text=f"-{day}曜日の時間割")) for day in day_list]
+        messages = TextSendMessage(text="何曜日の時間割ですか？",quick_reply=QuickReply(items=items))
+        line_bot_api.reply_message(event.reply_token, messages=messages)
+    elif cmd in lesson:
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextMessage(text=lesson[cmd])
+        )
     else:
         text=cmd + "コマンドは存在しません"
     line_bot_api.reply_message(
