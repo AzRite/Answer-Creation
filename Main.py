@@ -71,7 +71,7 @@ def handle_join(event):
     json_result = json.loads(response.decode('utf-8'))
     #display_name = json_result.display_name
     str = ''
-    for key, value = json_result:
+    for key, value in json_result:
         str += "'" + key + "' : '" + value + "'" 
     line_bot_api.reply_message(
         event.reply_token,
