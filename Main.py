@@ -70,12 +70,12 @@ def handle_join(event):
     #display_name = json.loads(response.decode('utf-8')).displayName;
     json_result = json.loads(response.decode('utf-8'))
     #display_name = json_result.display_name
-    str = ''
-    for key, value in json_result:
-        str += "'" + key + "' : '" + value + "'" 
+    #str = ''
+    #for key, value in json_result:
+    #    str += "'" + key + "' : '" + value + "'" 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは、{}".format(str)))
+        TextSendMessage(text="こんにちは、{}".format(json_result)))
 
 
 
