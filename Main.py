@@ -75,7 +75,7 @@ def handle_join(event):
         str += "'" + key + "' : '" + value + "'" 
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは、{}".format(json_result)))
+        TextSendMessage(text="こんにちは、{}".format(str)))
 
 
 
