@@ -8,7 +8,7 @@ import json
 import urllib
 
 #日付情報の取得に必要
-import datetime
+import dat
 
 from linebot import (
     LineBotApi, WebhookHandler
