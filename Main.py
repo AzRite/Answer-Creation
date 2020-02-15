@@ -55,7 +55,7 @@ def handle_join(event):
     #gId = event.source.groupId
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは、{}。".format(event.joined.members)))
+        TextSendMessage(text="こんにちは、{}。".format(event.joined.members[0])))
 
 
 
