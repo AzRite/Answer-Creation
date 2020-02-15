@@ -1,6 +1,10 @@
 from flask import Flask, request, abort
 import os
+
+#JSONファイルを扱うのに必要
 import json
+
+#ユーザー情報の取得に必要
 import urllib
 
 from linebot import (
@@ -43,21 +47,20 @@ def callback():
 
     return 'OK'
 
-
+#オウム返し（テスト用）
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
 
-
+#ユーザーネームを含んだ挨拶
 @handler.add(MemberJoinedEvent)
 def handle_join(event):
+    #参加イベント情報から「ユーザーID」と「グループID」を取得
     uId = event.joined.members[0].user_id
     gId = event.source.group_id
-    #プロフィールの取得
-    #userId から displayName を取得
-    #url = 'https://api.line.me/v2/bot/profile/' + uId;
+    #LINEのAPIから「ユーザーID」と「グループID」をもとに「ユーザー情報」を取得
     url = 'https://api.line.me/v2/bot/group/{}/member/{}'.format(gId, uId);
     headers = {
         'Content-Type': 'application/json; charset=UTF-8',
@@ -67,9 +70,7 @@ def handle_join(event):
     req = urllib.request.Request(url, None, headers)
     with urllib.request.urlopen(req) as res:
         response = res.read()
-    #display_name = json.loads(response.decode('utf-8')).displayName;
     json_result = json.loads(response.decode('utf-8'))
-    #display_name = json_result.display_name
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="こんにちは、{}".format(json_result["displayName"])))
