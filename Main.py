@@ -55,8 +55,8 @@ def handle_message(event):
 def handle_join(event):
     uId = event.joined.members[0].user_id
     gId = event.source.group_id
-    // プロフィールの取得
-    // userId から displayName を取得
+    #プロフィールの取得
+    #userId から displayName を取得
     url = 'https://api.line.me/v2/bot/profile/' + uId;
     """response = UrlFetchApp.fetch(url, {
         'headers': {
