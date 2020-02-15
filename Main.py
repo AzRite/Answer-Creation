@@ -51,9 +51,10 @@ def handle_message(event):
 
 @handler.add(MemberJoinedEvent)
 def handle_join(event):
+    uId = event.joined.members[0].userId
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="Hello"))
+        TextSendMessage(text="こんにちは、"+uId+"。"))
 
 
 
