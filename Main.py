@@ -47,12 +47,12 @@ def handle_message(event):
         event.reply_token,
         TextSendMessage(text=event.message.text))
     
-'''@handler.add(MemberJoinedEvent)
-def handle_message(event):
+@handler.add(MemberJoinedEvent)
+def handle_join(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text="いらっしゃい"))
-'''
+
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
