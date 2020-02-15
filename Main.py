@@ -50,10 +50,15 @@ def callback():
 #コマンド
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    if not event.message.text.startswith("-"): return
+    cmd = event.message.text
+    if not cmd.startswith("-"): return
+    if cmd == "-日付を教えて":
+        text=date.today().strftime('%Y年%m月%d日')
+    else:
+        text=cmd
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=text))
 
 #ユーザーネームを含んだ挨拶
 @handler.add(MemberJoinedEvent)
