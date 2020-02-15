@@ -8,7 +8,7 @@ import json
 import urllib
 
 #日付情報の取得に必要
-import date
+from datetime import datetime
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -56,7 +56,7 @@ def handle_message(event):
     cmd = event.message.text
     if not cmd.startswith("-"): return
     if cmd == "-日付を教えて":
-        text=date.today().strftime('%Y年%m月%d日')
+        text=datetime(2014,1,2,3,4,5).strftime('%Y年%m月%d日です')
     else:
         text=cmd
     line_bot_api.reply_message(
