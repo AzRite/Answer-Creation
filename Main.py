@@ -55,10 +55,10 @@ def callback():
 def handle_message(event):
     cmd = event.message.text
     if not cmd.startswith("-"): return
-    if cmd == "-日付を教えて":
-        text=datetime.now().strftime('%Y年%m月%d日です')
+    if cmd == "-日付":
+        text=datetime.now().strftime('今日は%Y年%m月%d日です')
     else:
-        text=cmd
+        text=cmd + "コマンドは存在しません"
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=text))
