@@ -67,10 +67,10 @@ def handle_join(event):
     req = urllib.request.Request(url, None, headers)
     with urllib.request.urlopen(req) as res:
         response = res.read()
-    display_name = json.loads(response).display_name;
+    #display_name = json.loads(response).display_name;
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは、{}。".format(display_name)))
+        TextSendMessage(text="こんにちは、{}。".format(response)))
 
 
 
