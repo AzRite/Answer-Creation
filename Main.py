@@ -51,7 +51,7 @@ def handle_message(event):
 
 @handler.add(MemberJoinedEvent)
 def handle_join(event):
-    uId = event.joined.Members[0].userId
+    uId = event.joined.members[0].userId
     gId = event.source.groupId
     line_bot_api.reply_message(
         event.reply_token,
