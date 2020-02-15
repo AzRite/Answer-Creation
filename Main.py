@@ -49,10 +49,12 @@ def handle_message(event):
     
 @handler.add(MemberJoinedEvent)
 def handle_join(event):
+    pass
+'''
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage())
-
+        TextSendMessage(text="Hello"))
+'''
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
