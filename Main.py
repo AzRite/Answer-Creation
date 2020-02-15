@@ -7,7 +7,8 @@ import json
 #ユーザー情報の取得に必要
 import urllib
 
-import time
+#日付情報の取得に必要
+import datetime
 
 from linebot import (
     LineBotApi, WebhookHandler
