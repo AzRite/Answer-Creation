@@ -1,5 +1,7 @@
 from flask import Flask, request, abort
 import os
+import json
+import urllib
 
 from linebot import (
     LineBotApi, WebhookHandler
@@ -53,9 +55,28 @@ def handle_message(event):
 def handle_join(event):
     uId = event.joined.members[0].user_id
     gId = event.source.group_id
+    // プロフィールの取得
+    // userId から displayName を取得
+    url = 'https://api.line.me/v2/bot/profile/' + uId;
+    """response = UrlFetchApp.fetch(url, {
+        'headers': {
+            'Content-Type': 'application/json; charset=UTF-8',
+            'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN,
+        },
+    });
+    """
+    headers = {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer ' + CHANNEL_ACCESS_TOKEN,
+    }
+
+    req = urllib.request.Request(url, None, headers)
+    with urllib.request.urlopen(req) as res:
+        response = res.read()
+    display_name = json.loads(response).display_name;
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text="こんにちは、{}、{}。".format(uId, gId)))
+        TextSendMessage(text="こんにちは、{}。".format(display_name)))
 
 
 
