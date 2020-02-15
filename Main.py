@@ -10,7 +10,7 @@ import urllib
 #日付情報の取得に必要
 from datetime import datetime
 
-from cmd-data import lesson
+from cmddata import lesson
 
 from linebot import (
     LineBotApi, WebhookHandler
