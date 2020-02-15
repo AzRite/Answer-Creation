@@ -57,7 +57,8 @@ def handle_join(event):
     gId = event.source.group_id
     #プロフィールの取得
     #userId から displayName を取得
-    url = 'https:\/\/api.line.me\/v2\/bot\/profile\/' + uId;
+    #url = 'https://api.line.me/v2/bot/profile/' + uId;
+    url = 'https://api.line.me/v2/bot/group/{}/member/{}'.format(gId, uId);
     headers = {
         'Content-Type': 'application/json; charset=UTF-8',
         'Authorization': 'Bearer ' + YOUR_CHANNEL_ACCESS_TOKEN,
