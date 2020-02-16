@@ -70,19 +70,19 @@ def handle_message(event):
             TextMessage(text=lesson[cmd])
         )
     elif cmd == "-プロフィール取得":
-        profile = line_bot_api.get_profile(event.source.user_id)
-
-        status_msg = profile.status_message
-        if status_msg != "None":
+        #profile = line_bot_api.get_profile(event.source.user_id)
+        profile = line_bot_api.get_group_member_profile(event.source.group_id, event.source.user_id)
+        #status_msg = profile.status_message
+        #if status_msg != "None":
            # LINEに登録されているstatus_messageが空の場合は、"なし"という文字列を代わりの値とする
-           status_msg = "なし"
+           #status_msg = "なし"
 
         messages = TemplateSendMessage(alt_text="Buttons template",
                                        template=ButtonsTemplate(
                                            thumbnail_image_url=profile.picture_url,
                                            title=profile.display_name,
-                                           text=f"User ID: {profile.user_id[:10]}...\n"
-                                                f"Status Message: {status_msg}",
+                                           text=f"User ID: {profile.user_id[:10]}..."
+                                                #f"Status Message: {status_msg}",
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
     else:
