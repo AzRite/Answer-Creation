@@ -83,7 +83,7 @@ def handle_message(event):
                                            title=profile.display_name,
                                            text=f"User ID: {profile.user_id}\n"
                                                 f"Status Message: {status_msg}",
-                                           actions=[MessageAction(label="User IDを取得", text={profile.user_id})]))
+                                           actions=[MessageAction(label="User IDを取得", text="Testing Now...")]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
     else:
         text=cmd + "コマンドは存在しません"
