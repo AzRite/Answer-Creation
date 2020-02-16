@@ -81,7 +81,7 @@ def handle_message(event):
                                        template=ButtonsTemplate(
                                            thumbnail_image_url=profile.picture_url,
                                            title=profile.display_name,
-                                           text=f"User ID: {profile.user_id[:10]...}\n"
+                                           text=f"User ID: {profile.user_id[:10]}...\n"
                                                 f"Status Message: {status_msg}",
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
