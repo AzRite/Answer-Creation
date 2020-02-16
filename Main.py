@@ -69,7 +69,7 @@ def handle_message(event):
             event.reply_token,
             TextMessage(text=lesson[cmd])
         )
-    elif cmd == "-プロフィール取得":
+    elif cmd == "-DebugProfileG":
         #profile = line_bot_api.get_profile(event.source.user_id)
         profile = line_bot_api.get_group_member_profile(event.source.group_id, event.source.user_id)
         #status_msg = profile.status_message
