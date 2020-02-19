@@ -97,7 +97,7 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, messages=messages)
     elif cmd == "-ForceSQL":
         utc = datetime.now()
-        jst_modify = datetime.timedelta(hours=2)
+        jst_modify = timedelta(hours=2)
         reply_token = event.reply_token
         user_id = event.source.user_id
         profiles = line_bot_api.get_profile(user_id)
