@@ -96,7 +96,7 @@ def handle_message(event):
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
     elif cmd == "-ForceSQL":
-        utc = datetime.datetime.now()
+        utc = datetime.now()
         jst_modify = datetime.timedelta(hours=2)
         reply_token = event.reply_token
         user_id = event.source.user_id
