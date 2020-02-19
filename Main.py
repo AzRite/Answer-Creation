@@ -119,8 +119,8 @@ def handle_message(event):
             c.execute(sql)
             conn.commit()
         finally:
-            conn.close()
             c.close()
+            conn.close()
     elif cmd == "-DebugProfileP":
         profile = line_bot_api.get_profile(event.source.user_id)
 
