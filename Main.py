@@ -117,7 +117,7 @@ def handle_message(event):
                 `status_message` = '"+str(status_message)+"', `date` = '"+time_info+"' WHERE `user_id` = '"+user_id+"';"
             #c.execute(sql)
             #conn.commit()
-        #finally:
+        finally:
             #conn.close()
             #c.close()
             line_bot_api.reply_message(
