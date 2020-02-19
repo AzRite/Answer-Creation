@@ -172,30 +172,35 @@ def handle_join(event):
 
 @handler.add(FollowEvent)
 def on_follow(event):
+    utc = datetime.now()
+    jst_modify = timedelta(hours=9)
     reply_token = event.reply_token
     user_id = event.source.user_id
-    profiles = line_bot_api.get_profile(user_id=user_id)
+    profiles = line_bot_api.get_profile(user_id)
     display_name = profiles.display_name
     picture_url = profiles.picture_url
     status_message = profiles.status_message
-    time_info = time.strftime('%Y-%m-%d %H:%M:%S')
+    jst = utc+jst_modify
+    time_info = jst.strftime('%Y/%m/%d %H:%M:%S')
 
     # DBへの保存
     try:
-        conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME)
+        conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME, use_unicode=True, charset="utf8")
         c = conn.cursor()
         sql = "SELECT `user_id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
         c.execute(sql)
         ret = c.fetchall()
         if len(ret) == 0:
-            sql = "INSERT INTO `"+REMOTE_DB_TB+"` (`user_id`, `display_name`, `picture_url`, `status_message`, `date`) VALUES ('"+user_id+"', '"+str(display_name)+"', '"+str(picture_url)+"', '"+str(status_message)+"', '"+time_info+"');"
+            sql = "INSERT INTO `"+REMOTE_DB_TB+"` (`user_id`, `display_name`, `picture_url`, `status_message`, `date`)\
+              VALUES ('"+user_id+"', '"+str(display_name)+"', '"+str(picture_url)+"', '"+str(status_message)+"', '"+time_info+"');"
         elif len(ret) == 1:
-            sql = "UPDATE `"+REMOTE_DB_TB+"` SET `display_name` = '"+str(display_name)+"', `picture_url` = '"+str(picture_url)+"', `status_message` = '"+str(status_message)+"', `date` = '"+time_info+"' WHERE `user_id` = '"+user_id+"';"
+            sql = "UPDATE `"+REMOTE_DB_TB+"` SET `display_name` = '"+str(display_name)+"', `picture_url` = '"+str(picture_url)+"',\
+            `status_message` = '"+str(status_message)+"', `date` = '"+time_info+"' WHERE `user_id` = '"+user_id+"';"
         c.execute(sql)
         conn.commit()
     finally:
-        conn.close()
         c.close()
+        conn.close()
 
 if __name__ == "__main__":
 #    app.run()
