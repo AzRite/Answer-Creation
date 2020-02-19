@@ -106,7 +106,7 @@ def handle_message(event):
         try:
             conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME)
             c = conn.cursor()
-            sql = "SELECT `id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
+            sql = "SELECT `user_id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
             c.execute(sql)
             ret = c.fetchall()
             if len(ret) == 0:
@@ -179,7 +179,7 @@ def on_follow(event):
     try:
         conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME)
         c = conn.cursor()
-        sql = "SELECT `id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
+        sql = "SELECT `user_id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
         c.execute(sql)
         ret = c.fetchall()
         if len(ret) == 0:
