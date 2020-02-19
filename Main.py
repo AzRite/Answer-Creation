@@ -121,8 +121,8 @@ def handle_message(event):
             #conn.close()
             #c.close()
             line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=sql))
+                event.reply_token,
+                TextSendMessage(text=sql))
     elif cmd == "-DebugProfileP":
         profile = line_bot_api.get_profile(event.source.user_id)
 
