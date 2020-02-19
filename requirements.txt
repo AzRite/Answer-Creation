@@ -1,2 +1,4 @@
 Flask
 line-bot-sdk
+mysqlclient
+PyMySQL
