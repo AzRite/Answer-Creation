@@ -1,6 +1,8 @@
 from flask import Flask, request, abort
 import os
 
+import time
+
 #JSONファイルを扱うのに必要
 import json
 
@@ -9,6 +11,13 @@ import urllib
 
 #日付情報の取得に必要
 from datetime import datetime
+
+try:
+    import MySQLdb
+except:
+    import pymysql
+    pymysql.install_as_MySQLdb()
+    import MySQLdb
 
 from cmddata import lesson
 
@@ -27,6 +36,12 @@ app = Flask(__name__)
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+
+REMOTE_HOST = os.environ['REMOTE_HOST']
+REMOTE_DB_NAME = os.environ['REMOTE_DB_NAME']
+REMOTE_DB_USER = os.environ['REMOTE_DB_USER']
+REMOTE_DB_PASS = os.environ['REMOTE_DB_PASS']
+REMOTE_DB_TB = os.environ['REMOTE_DB_TB']
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
@@ -78,6 +93,33 @@ def handle_message(event):
                                            text=f"User ID: {profile.user_id[:10]}...",
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
+    elif cmd == "-ForceSQL":
+        reply_token = event.reply_token
+        user_id = event.source.user_id
+        profiles = line_bot_api.get_profile(user_id=user_id)
+        display_name = profiles.display_name
+        picture_url = profiles.picture_url
+        status_message = profiles.status_message
+        time_info = time.strftime('%Y-%m-%d %H:%M:%S')
+
+    # DBへの保存
+        try:
+            conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME)
+            c = conn.cursor()
+            sql = "SELECT `id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
+            c.execute(sql)
+            ret = c.fetchall()
+            if len(ret) == 0:
+                sql = "INSERT INTO `"+REMOTE_DB_TB+"` (`user_id`, `display_name`, `picture_url`, `status_message`, `date`)\
+                  VALUES ('"+user_id+"', '"+str(display_name)+"', '"+str(picture_url)+"', '"+str(status_message)+"', '"+time_info+"');"
+            elif len(ret) == 1:
+                sql = "UPDATE `"+REMOTE_DB_TB+"` SET `display_name` = '"+str(display_name)+"', `picture_url` = '"+str(picture_url)+"',\
+                `status_message` = '"+str(status_message)+"', `date` = '"+time_info+"' WHERE `user_id` = '"+user_id+"';"
+            c.execute(sql)
+            conn.commit()
+        finally:
+            conn.close()
+            c.close()
     elif cmd == "-DebugProfileP":
         profile = line_bot_api.get_profile(event.source.user_id)
 
@@ -123,7 +165,34 @@ def handle_join(event):
 確認後「いいね」してください！
 マナーを守って、学力向上に努めましょう\uDBC0\uDC79""".format(json_result["displayName"])))
 
+@handler.add(FollowEvent)
+def on_follow(event):
+    reply_token = event.reply_token
+    user_id = event.source.user_id
+    profiles = line_bot_api.get_profile(user_id=user_id)
+    display_name = profiles.display_name
+    picture_url = profiles.picture_url
+    status_message = profiles.status_message
+    time_info = time.strftime('%Y-%m-%d %H:%M:%S')
 
+    # DBへの保存
+    try:
+        conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME)
+        c = conn.cursor()
+        sql = "SELECT `id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
+        c.execute(sql)
+        ret = c.fetchall()
+        if len(ret) == 0:
+            sql = "INSERT INTO `"+REMOTE_DB_TB+"` (`user_id`, `display_name`, `picture_url`, `status_message`, `date`)\
+              VALUES ('"+user_id+"', '"+str(display_name)+"', '"+str(picture_url)+"', '"+str(status_message)+"', '"+time_info+"');"
+        elif len(ret) == 1:
+            sql = "UPDATE `"+REMOTE_DB_TB+"` SET `display_name` = '"+str(display_name)+"', `picture_url` = '"+str(picture_url)+"',\
+            `status_message` = '"+str(status_message)+"', `date` = '"+time_info+"' WHERE `user_id` = '"+user_id+"';"
+        c.execute(sql)
+        conn.commit()
+    finally:
+        conn.close()
+        c.close()
 
 if __name__ == "__main__":
 #    app.run()
