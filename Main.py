@@ -141,9 +141,9 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, messages=messages)
     else:
         text=cmd + "コマンドは存在しません"
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=text))
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=text))
 
 #ユーザーネームを含んだ挨拶
 @handler.add(MemberJoinedEvent)
