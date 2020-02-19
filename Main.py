@@ -96,7 +96,7 @@ def handle_message(event):
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
     elif cmd == "-ForceSQL":
-        time = time.strftime('%Y-%m-%d %H:%M:%S')
+        UTC = time.strftime('%Y-%m-%d %H:%M:%S')
         JST = datetime.timedelta(hours=9)
         reply_token = event.reply_token
         user_id = event.source.user_id
@@ -104,7 +104,7 @@ def handle_message(event):
         display_name = profiles.display_name
         picture_url = profiles.picture_url
         status_message = profiles.status_message
-        time_info = time+JST
+        time_info = UTC+JST
 
     # DBへの保存
         try:
