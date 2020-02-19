@@ -99,13 +99,12 @@ def handle_message(event):
         profiles = line_bot_api.get_profile(user_id)
         display_name = profiles.display_name
         picture_url = profiles.picture_url
-        "status_message = profiles.status_message"
-        status_message = ""
+        status_message = profiles.status_message
         time_info = time.strftime('%Y-%m-%d %H:%M:%S')
 
     # DBへの保存
         try:
-            conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME)
+            conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME, use_unicode=True, charset="utf8")
             c = conn.cursor()
             sql = "SELECT `user_id` FROM`"+REMOTE_DB_TB+"` WHERE `user_id` = '"+user_id+"';"
             c.execute(sql)
