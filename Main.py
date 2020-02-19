@@ -96,7 +96,7 @@ def handle_message(event):
     elif cmd == "-ForceSQL":
         reply_token = event.reply_token
         user_id = event.source.user_id
-        profiles = line_bot_api.get_profile(user_id=user_id)
+        profiles = line_bot_api.get_profile(user_id)
         display_name = profiles.display_name
         picture_url = profiles.picture_url
         status_message = profiles.status_message
