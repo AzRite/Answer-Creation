@@ -12,6 +12,8 @@ import urllib
 #日付情報の取得に必要
 from datetime import datetime
 
+import pytz
+
 try:
     import MySQLdb
 except:
@@ -94,13 +96,15 @@ def handle_message(event):
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
     elif cmd == "-ForceSQL":
+        jst = pytz.timezone('Japan')
+        jst_datetime = datetime.now().replace(tzinfo=jst)
         reply_token = event.reply_token
         user_id = event.source.user_id
         profiles = line_bot_api.get_profile(user_id)
         display_name = profiles.display_name
         picture_url = profiles.picture_url
         status_message = profiles.status_message
-        time_info = time.strftime('%Y-%m-%d %H:%M:%S')
+        time_info = time.strftime(jst_datetime, '%Y-%m-%d %H:%M:%S')
 
     # DBへの保存
         try:
