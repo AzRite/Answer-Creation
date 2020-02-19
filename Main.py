@@ -115,11 +115,14 @@ def handle_message(event):
             elif len(ret) == 1:
                 sql = "UPDATE `"+REMOTE_DB_TB+"` SET `display_name` = '"+str(display_name)+"', `picture_url` = '"+str(picture_url)+"',\
                 `status_message` = '"+str(status_message)+"', `date` = '"+time_info+"' WHERE `user_id` = '"+user_id+"';"
-            c.execute(sql)
-            conn.commit()
-        finally:
-            conn.close()
-            c.close()
+            #c.execute(sql)
+            #conn.commit()
+        #finally:
+            #conn.close()
+            #c.close()
+            line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=sql))
     elif cmd == "-DebugProfileP":
         profile = line_bot_api.get_profile(event.source.user_id)
 
