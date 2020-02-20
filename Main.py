@@ -140,6 +140,11 @@ def handle_message(event):
                                                 f"Status Message: {status_msg}",
                                            actions=[MessageAction(label="User IDを取得", text=profile.user_id)]))
         line_bot_api.reply_message(event.reply_token, messages=messages)
+    elif cmd == "-Push":
+        user_id = "Udadd289ae892a95ac0ebcf9d7bc9d550"
+
+        messages = TextSendMessage(text=f"こんにちは😁\n\n最近はいかがお過ごしでしょうか?")
+        line_bot_api.push_message(user_id, messages=messages)
     else:
         text=cmd + "コマンドは存在しません"
         line_bot_api.reply_message(
