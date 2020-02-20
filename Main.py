@@ -209,6 +209,31 @@ def on_follow(event):
         c.close()
         conn.close()
 
+@app.route('/push_homework_day', methods=['GET'])
+def push_homework_day():
+    push_text = '今日の小テストは「'
+ 
+    # ゴミの日リスト(1)
+    # 0: 月, 1: 火, 2: 水, 3: 木, 4: 金
+    homework_list = {
+        0: '数学',
+        1: '物理',
+        2: '体育',
+        3: '家庭科',
+        4: '道徳',
+    }
+ 
+    weekday = datetime.now().weekday()
+ 
+    if weekday == 5 or weekday == 6:
+        return 'OK'
+ 
+    push_text += homework_list[weekday] + '」です。'
+    to = 'Udadd289ae892a95ac0ebcf9d7bc9d550' # 送信先(2)
+    line_bot_api.push_message(to, TextSendMessage(text=push_text))
+ 
+    return 'OK'
+
 if __name__ == "__main__":
 #    app.run()
     port = int(os.getenv("PORT"))
