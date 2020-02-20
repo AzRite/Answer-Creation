@@ -175,7 +175,9 @@ def handle_join(event):
 ノートからルールのご確認をよろしくお願いします\uDBC0\uDC2D
 確認後「いいね」してください！
 
-マナーを守って、学力向上に努めましょう\uDBC0\uDC79""".format(json_result["displayName"])))
+マナーを守って、学力向上に努めましょう\uDBC0\uDC79
+
+公式BOTの友達追加もよろしくお願いします！""".format(json_result["displayName"])))
 
 @handler.add(FollowEvent)
 def on_follow(event):
