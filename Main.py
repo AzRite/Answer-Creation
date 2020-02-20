@@ -229,9 +229,23 @@ def push_homework_day():
         return 'OK'
  
     push_text += homework_list[weekday] + '」です。'
-    to = 'Udadd289ae892a95ac0ebcf9d7bc9d550' # 送信先(2)
-    line_bot_api.push_message(to, TextSendMessage(text=push_text))
- 
+    
+    conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME, use_unicode=True, charset="utf8")
+    c = conn.cursor()
+    sql = "SELECT `user_id` FROM`"+REMOTE_DB_TB+"` ;"
+    c.execute(sql)
+    
+    while True:
+        res = c.fetchone()
+
+        if res is None :
+            break    
+
+        to = res[0]
+        #to = 'Udadd289ae892a95ac0ebcf9d7bc9d550' # 送信先(2)
+        line_bot_api.push_message(to, TextSendMessage(text=push_text))
+
+
     return 'OK'
 
 if __name__ == "__main__":
