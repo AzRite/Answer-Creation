@@ -228,7 +228,7 @@ def push_homework_day():
     if weekday == 5 or weekday == 6:
         return 'OK'
  
-    push_text += homework_list[weekday] + '」です。'
+    push_text += homework_list[weekday] + '」です。\n※テスト配信です。'
     
     conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME, use_unicode=True, charset="utf8")
     c = conn.cursor()
