@@ -175,7 +175,7 @@ def handle_join(event):
 ノートからルールのご確認をよろしくお願いします\uDBC0\uDC2D
 確認後「いいね」してください！
 
-マナーを守って、学力向上に努めましょう\uDBC0\uDC79
+マナーを守って使いましょう\uDBC0\uDC79
 
 公式BOTの友達追加もよろしくお願いします！""".format(json_result["displayName"])))
 
@@ -214,7 +214,7 @@ def on_follow(event):
 @app.route('/push_homework_day', methods=['GET'])
 def push_homework_day():
     push_text = '今日の小テストは「'
- 
+
     # ゴミの日リスト(1)
     # 0: 月, 1: 火, 2: 水, 3: 木, 4: 金
     homework_list = {
@@ -224,24 +224,24 @@ def push_homework_day():
         3: '家庭科',
         4: '道徳',
     }
- 
+
     weekday = datetime.now().weekday()
- 
+
     if weekday == 5 or weekday == 6:
         return 'OK'
- 
+
     push_text += homework_list[weekday] + '」です。\n※テスト配信です。'
-    
+
     conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME, use_unicode=True, charset="utf8")
     c = conn.cursor()
     sql = "SELECT `user_id` FROM`"+REMOTE_DB_TB+"` ;"
     c.execute(sql)
-    
+
     while True:
         res = c.fetchone()
 
         if res is None :
-            break    
+            break
 
         to = res[0]
         #to = 'Udadd289ae892a95ac0ebcf9d7bc9d550' # 送信先(2)
