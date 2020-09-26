@@ -214,7 +214,7 @@ def on_follow(event):
 
 @app.route('/push_homework_day', methods=['GET'])
 def push_homework_day():
-    push_text = '今日が小テストは「'
+    push_text = '今日が期限の提出物は「'
 
     # ゴミの日リスト(1)
     # 0: 月, 1: 火, 2: 水, 3: 木, 4: 金
