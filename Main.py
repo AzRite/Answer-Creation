@@ -76,6 +76,7 @@ def handle_message(event):
     if not cmd.startswith("-"): return
     if cmd == "-日付":
         text=datetime.now().strftime('今日は%Y年%m月%d日です')
+        line_bot_api.reply_message(event.reply_token, messages=text)
     elif cmd == "-時間割":
         day_list = ["月", "火", "水", "木", "金"]
         items = [QuickReplyButton(action=MessageAction(label=f"{day}", text=f"-{day}曜日の時間割")) for day in day_list]
@@ -213,7 +214,7 @@ def on_follow(event):
 
 @app.route('/push_homework_day', methods=['GET'])
 def push_homework_day():
-    push_text = '今日の小テストは「'
+    push_text = '今日が小テストは「'
 
     # ゴミの日リスト(1)
     # 0: 月, 1: 火, 2: 水, 3: 木, 4: 金
