@@ -76,7 +76,9 @@ def handle_message(event):
     if not cmd.startswith("-"): return
     if cmd == "-日付":
         text=datetime.now().strftime('今日は%Y年%m月%d日です')
-        line_bot_api.reply_message(event.reply_token, messages=text)
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=text))
     elif cmd == "-時間割":
         day_list = ["月", "火", "水", "木", "金"]
         items = [QuickReplyButton(action=MessageAction(label=f"{day}", text=f"-{day}曜日の時間割")) for day in day_list]
