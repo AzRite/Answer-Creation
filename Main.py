@@ -218,14 +218,14 @@ def on_follow(event):
 def push_homework_day():
     push_text = '今日が期限の提出物は「'
 
-    # ゴミの日リスト(1)
+    # 提出物リスト
     # 0: 月, 1: 火, 2: 水, 3: 木, 4: 金
     homework_list = {
-        0: '数学',
+        0: '',
         1: '物理',
         2: '体育',
         3: '家庭科',
-        4: '道徳',
+        4: '医用機器安全管理学',
     }
 
     weekday = datetime.now().weekday()
@@ -233,7 +233,7 @@ def push_homework_day():
     if weekday == 5 or weekday == 6:
         return 'OK'
 
-    push_text += homework_list[weekday] + '」です。\n※テスト配信です。'
+    push_text += homework_list[weekday] + '」です。\n忘れないように気をつけましょう！'
 
     conn = MySQLdb.connect(user=REMOTE_DB_USER, passwd=REMOTE_DB_PASS, host=REMOTE_HOST, db=REMOTE_DB_NAME, use_unicode=True, charset="utf8")
     c = conn.cursor()
